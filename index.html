@@ -67,9 +67,25 @@
         </div>
 
       </div>
+      <div style="display: none;" id="loader" class="row">
+        <div class="col-12">
+          <div class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-6"><h5>Request</h5></div>
-        <div class="col-6"><h5>Response</h5></div>
+        <div class="col-6">
+          <h5>Request</h5>
+        </div>
+        <div class="col-3">
+          <h5>Response</h5>
+        </div>
+        <div class="col-3">
+          <div id="status"></div>
+        </div>
       </div>
       <div class="row">
         <div class="col-6" id="request"></div>
@@ -79,15 +95,7 @@
 
   </div>
 
-  <div style="display: none;" id="loder" class="row">
-    <div class="col-12">
-      <div class="lds-facebook">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
-  </div>
+
 
   <link href="./content/jsoneditor.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="./content/darktheme.css" />

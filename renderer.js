@@ -15,6 +15,13 @@ const response_editor = new JSONEditor(responseDiv, options)
 window.api.receive("response", (msg) => {
     $("#btn_send").prop('disabled', false);
     $("#loader").hide();
+    let status = msg.properties.headers.status;
+    var alert = '';
+    if (status == 200) alert = 'success';
+    if (status == 500) alert = 'error';
+    if (status == 400) alert = 'warning';
+
+    $("#status").html(`<span class="dot ${alert}"></span> ${status}`);
     response_editor.set(JSON.parse(msg.payload))
 });
 
@@ -22,7 +29,7 @@ window.api.receive("response", (msg) => {
 window.api.receive("connected", (args) => {
     $("#btn_connect").text("Disconnect");
     $("#btn_connect").removeClass("btn-primary");
-    $("#btn_connect").addClass("btn-warning");
+    $("#btn_connect").addClass("btn-danger");
     $("#connection_settings").hide();
     $("#work_area").show();
     $("#btn_send").show();
@@ -36,7 +43,7 @@ window.api.receive("connected", (args) => {
 window.api.receive("disconnected", (msg) => {
     $("#btn_connect").text("Connect");
     $("#btn_connect").addClass("btn-primary");
-    $("#btn_connect").removeClass("btn-warning");
+    $("#btn_connect").removeClass("btn-danger");
     $("#connection_settings").show();
     $("#work_area").hide();
     $("#btn_send").hide();
@@ -104,7 +111,7 @@ jQuery(function () {
 
     $(".prof-link").on('click', function (e) {
         var profileId = $(this).attr('data-prof');
-    
+
         let profiles = getProfiles();
         loadProfile(profiles[profileId]);
     });
@@ -136,8 +143,7 @@ function saveProfile(profile) {
     addProfileToTable(profile);
 }
 
-function removeProfile(profileId)
-{
+function removeProfile(profileId) {
     let profiles = getProfiles();
     delete profiles[profileId];
     localStorage.setItem(profilesKey, JSON.stringify(profiles));

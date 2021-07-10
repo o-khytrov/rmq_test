@@ -51,15 +51,6 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-ipcMain.on("receive_msg", (event, args) => {
-
-  console.log(args);
-  mainWindow.webContents.send("response", "response");
-
-});
-
 ipcMain.on("log", (event, args) => {
   console.log(args);
 
@@ -120,12 +111,14 @@ ipcMain.on("connect", (event, args) => {
 
         ch.consume(q.queue, function (msg) {
           let payload;
+
           if (msg.content) {
             payload = msg.content.toString()
-            console.log(" [x] %s", payload);
+
           }
           mainWindow.webContents.send("response", {
-            payload
+            payload,
+            properties: msg.properties
           });
         }, {
           noAck: true
