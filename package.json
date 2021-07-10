@@ -1,0 +1,22 @@
+{
+  "name": "electron-quick-start",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^13.1.5"
+  },
+  "dependencies": {
+    "amqplib": "^0.8.0",
+    "bootstrap": "^4.1.3",
+    "bootswatch": "^5.0.2",
+    "jquery": "^3.3.1",
+    "jsoneditor": "^9.5.1",
+    "popper.js": "^1.14.4"
+  }
+}

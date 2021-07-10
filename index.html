@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+
+  <title>Rmq Testing</title>
+</head>
+
+<body>
+  <link rel="stylesheet" href="./content/bootstrap.min.css" />
+
+  <div class="container-fluid">
+    <h1>Rmq Testing</h1>
+    <div class="row" id="connection_settings">
+      <div class="col-6">
+        <div class="form-group">
+          <input class="form-control mb-2" type="text" id="host" placeholder="host" />
+          <input class="form-control mb-2" type="text" id="vhost" placeholder="vhost" />
+          <input class="form-control mb-2" type="text" id="exchange" placeholder="exchange" />
+          <input class="form-control mb-2" type="text" id="username" placeholder="username" />
+          <input class="form-control" type="password" id="password" placeholder="password" />
+          <input class="form-check-input" type="checkbox" value="" id="remember">
+          <label class="form-check-label" for="remember">
+            Save profile
+          </label>
+          <input class="form-control" type="text" id="prof_name" placeholder="profile name" style="display: none;" />
+        </div>
+      </div>
+      <div class="col-6">
+
+        <table class="table">
+          <tbody id="profiles">
+
+          </tbody>
+        </table>
+        <button class="btn btn-sm btn-danger" id="btn_profiles_clear">Clear</button>
+      </div>
+    </div>
+
+
+    <div class="mb-2">
+
+
+    </div>
+    <div class="row mb-3">
+      <div class="col-3">
+        <button class="btn btn-primary" id="btn_connect">Connect</button>
+      </div>
+      <div class="col-4" id="connection_properties">
+        <div id="reply_queue">
+
+        </div>
+      </div>
+
+    </div>
+
+    <div id="work_area" style="display: none;">
+      <div class="row">
+        <div class="col-3">
+          <input class="form-control mb-2" type="text" id="routing_key" placeholder="routing key" />
+        </div>
+        <div class="col-3">
+          <button class="btn btn-success" id="btn_send" style="display: none;">Send</button>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-6"><h5>Request</h5></div>
+        <div class="col-6"><h5>Response</h5></div>
+      </div>
+      <div class="row">
+        <div class="col-6" id="request"></div>
+        <div class="col-6" id="response"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display: none;" id="loder" class="row">
+    <div class="col-12">
+      <div class="lds-facebook">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <link href="./content/jsoneditor.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="./content/darktheme.css" />
+  <script src="./content/jquery.min.js"></script>
+  <script src="./content/jsoneditor.min.js"></script>
+  <link href="./app.css" rel="stylesheet" type="text/css">
+
+  <!-- You can also require other files to run in this process -->
+  <script src="./renderer.js"></script>
+
+</body>
+
+</html>
