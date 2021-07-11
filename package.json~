@@ -26,7 +26,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-	      "icon":"./appicons/icons/win/icon.ico"
+	      "icon":"rabbitmq-logo"
       },
       "makers": [
         {
