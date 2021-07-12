@@ -123,9 +123,9 @@ jQuery(function () {
 
     $("#remember").on('click', function (e) {
         if ($(this).prop('checked')) {
-            $("#prof_name").hide();
-        } else {
             $("#prof_name").show();
+        } else {
+            $("#prof_name").hide();
         }
 
     });
