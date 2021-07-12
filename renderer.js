@@ -3,6 +3,7 @@ var responseDiv = document.getElementById("response");
 var requestDiv = document.getElementById("request");
 const profilesKey = "connection_profiles";
 let profile = {};
+let wating = false;
 const options = {
 
     mode: 'code',
@@ -21,9 +22,9 @@ window.api.receive("response", (msg) => {
     if (status == 200) alert = 'success';
     if (status == 500) alert = 'error';
     if (status == 400) alert = 'warning';
-
+    wating = false;
     $("#status").html(`<span class="dot ${alert}"></span> ${status}`);
-    response_editor.set(JSON.parse(msg.payload))
+    response_editor.set(JSON.parse(msg.payload));
 });
 
 
@@ -74,7 +75,8 @@ jQuery(function () {
             payload: request_editor.getText(),
             routing_key: $("#routing_key").val()
         });
-        setTimeout(cancelRequest, profile.timeout * 1000);
+        wating = true;
+        setTimeout(requestTimeout, profile.timeout * 1000);
     });
 
     $("#btn_profiles_clear").on('click', function (e) {
@@ -176,10 +178,14 @@ function generateGuid() {
     return result;
 }
 
-function cancelRequest() {
-    $("#btn_send").prop('disabled', false);
-    $("#loader").hide();
-    let status = "Timeout"
-    var alert = 'error';
-    $("#status").html(`<span class="dot ${alert}"></span> ${status}`);
+function requestTimeout() {
+    if (wating) {
+        $("#btn_send").prop('disabled', false);
+        $("#loader").hide();
+        let status = "Timeout"
+        var alert = 'error';
+        $("#status").html(`<span class="dot ${alert}"></span> ${status}`);
+        wating = false;
+    }
+
 }
