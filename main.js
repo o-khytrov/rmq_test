@@ -86,7 +86,11 @@ ipcMain.on("connect", (event, args) => {
     vhost: args.vhost
   }
 
-  amqp.connect(options, function (error0, connection) {
+  amqp.connect(options, {
+    clientProperties: {
+      connection_name: "rmqtest"
+    }
+  }, function (error0, connection) {
     if (error0) {
       throw error0;
     }

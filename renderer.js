@@ -2,6 +2,7 @@ let connected = false;
 var responseDiv = document.getElementById("response");
 var requestDiv = document.getElementById("request");
 const profilesKey = "connection_profiles";
+let profile = {};
 const options = {
 
     mode: 'code',
@@ -65,12 +66,15 @@ jQuery(function () {
 
     $("#btn_send").on('click', function () {
         response_editor.set({});
+        $("#status").empty();
         $("#btn_send").prop('disabled', true);
         $("#loader").show();
+
         window.api.send("request", {
             payload: request_editor.getText(),
             routing_key: $("#routing_key").val()
         });
+        setTimeout(cancelRequest, profile.timeout * 1000);
     });
 
     $("#btn_profiles_clear").on('click', function (e) {
@@ -81,14 +85,15 @@ jQuery(function () {
 
     $("#btn_connect").on('click', function (e) {
         if (!connected) {
-            var profile = {
+            profile = {
                 host: $("#host").val(),
                 vhost: $("#vhost").val(),
                 exchange: $("#exchange").val(),
                 username: $("#username").val(),
                 password: $("#password").val(),
                 id: generateGuid(),
-                name: $("prof_name").val()
+                name: $("prof_name").val(),
+                timeout: $("#timeout").val()
             };
             if ($('#remember').prop('checked', )) {
                 saveProfile(profile);
@@ -117,7 +122,12 @@ jQuery(function () {
     });
 
     $("#remember").on('click', function (e) {
-        $("#prof_name").show();
+        if ($(this).prop('checked')) {
+            $("#prof_name").hide();
+        } else {
+            $("#prof_name").show();
+        }
+
     });
 });
 
@@ -127,6 +137,7 @@ function loadProfile(profile) {
     $("#exchange").val(profile.exchange);
     $("#username").val(profile.username);
     $("#password").val(profile.password);
+    $("#timeout").val(profile.timeout);
 }
 
 function getProfiles() {
@@ -163,4 +174,12 @@ function generateGuid() {
         result = result + i;
     }
     return result;
+}
+
+function cancelRequest() {
+    $("#btn_send").prop('disabled', false);
+    $("#loader").hide();
+    let status = "Timeout"
+    var alert = 'error';
+    $("#status").html(`<span class="dot ${alert}"></span> ${status}`);
 }
