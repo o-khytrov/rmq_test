@@ -22,10 +22,7 @@
     "electron": "^13.1.5"
   },
   "dependencies": {
-    "amqplib": "^0.8.0",
-    "bootswatch": "^5.0.2",
-    "electron-builder": "^22.11.7",
-    "electron-squirrel-startup": "^1.0.0"
+    "amqplib": "^0.8.0"
   },
   "config": {
     "forge": {
