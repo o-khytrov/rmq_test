@@ -2,6 +2,7 @@
 const {
   app,
   ipcMain,
+  dialog,
   BrowserWindow
 } = require('electron')
 const path = require('path')
@@ -92,7 +93,8 @@ ipcMain.on("connect", (event, args) => {
     }
   }, function (error0, connection) {
     if (error0) {
-      throw error0;
+      dialog.showErrorBox("RabbitMQ Error", "Failed to connecto to rabbimt mq");
+      return;
     }
     _connection = connection;
     connection.createChannel(function (error1, ch) {
