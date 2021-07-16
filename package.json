@@ -7,7 +7,9 @@
     "dev": "electron .",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "author": "o.khytrov",
   "license": "CC0-1.0",
@@ -22,12 +24,13 @@
   "dependencies": {
     "amqplib": "^0.8.0",
     "bootswatch": "^5.0.2",
+    "electron-builder": "^22.11.7",
     "electron-squirrel-startup": "^1.0.0"
   },
   "config": {
     "forge": {
       "packagerConfig": {
-	      "icon":"./appicons/icons/win/icon.ico"
+        "icon": "./appicons/icons/win/icon.ico"
       },
       "makers": [
         {
@@ -51,6 +54,12 @@
           "config": {}
         }
       ]
+    }
+  },
+  "build": {
+    "appId": "your.id",
+    "mac": {
+      "category": "your.app.category.type"
     }
   }
 }
