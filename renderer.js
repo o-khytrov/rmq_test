@@ -94,7 +94,7 @@ jQuery(function () {
                 username: $("#username").val(),
                 password: $("#password").val(),
                 id: generateGuid(),
-                name: $("prof_name").val(),
+                name: $("#prof_name").val(),
                 timeout: $("#timeout").val()
             };
             if ($('#remember').prop('checked', )) {
@@ -109,6 +109,50 @@ jQuery(function () {
 
     });
 
+    updateProfileTableEvents();
+
+    $("#remember").on('click', function (e) {
+        if ($(this).prop('checked')) {
+            $("#prof_name").show();
+        } else {
+            $("#prof_name").hide();
+        }
+
+    });
+
+    $("#btn_profiles_export").on('click', function (e) {
+        const content = localStorage.getItem(profilesKey);
+        const element = document.createElement("a");
+        const file = new Blob([content], {
+            type: "text/plain"
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = "endpoints.json";
+        element.click();
+        element.remove();
+    });
+
+
+    $("#btn_profiles_import").on('click', function (e) {
+        $("#enpoints_file").trigger("click");
+    });
+
+    $("#enpoints_file").on('change', function (e) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var profilesJson = e.target.result;
+            if (profilesJson) {
+                var profiles = JSON.parse(profilesJson);
+                for (profile in profiles) {
+                    saveProfile(profiles[profile]);
+                }
+            }
+        }
+        reader.readAsText($(this)[0].files[0]);
+    });
+});
+
+function updateProfileTableEvents() {
     $(".prof_rem").on('click', function (e) {
         var profileId = $(this).attr('data-prof');
         $(`#${profileId}`).remove();
@@ -122,16 +166,7 @@ jQuery(function () {
         let profiles = getProfiles();
         loadProfile(profiles[profileId]);
     });
-
-    $("#remember").on('click', function (e) {
-        if ($(this).prop('checked')) {
-            $("#prof_name").show();
-        } else {
-            $("#prof_name").hide();
-        }
-
-    });
-});
+}
 
 function loadProfile(profile) {
     $("#host").val(profile.host);
@@ -150,6 +185,7 @@ function getProfiles() {
 }
 
 function saveProfile(profile) {
+    window.api.send("log", JSON.stringify(profile));
     let profiles = getProfiles();
     profiles[profile.id] = profile;
     localStorage.setItem(profilesKey, JSON.stringify(profiles));
@@ -163,7 +199,8 @@ function removeProfile(profileId) {
 }
 
 function addProfileToTable(profile) {
-    $("#profiles").append(`<tr id="${profile.id}"><td><a class="prof-link" data-prof="${profile.id}" href="#">${profile.host}</a></td><td><button data-prof="${profile.id}" class="btn btn-sm btn-danger prof_rem">remove</button></td></tr>`);
+    $("#profiles").append(`<tr id="${profile.id}"><td><a class="prof-link" data-prof="${profile.id}" href="#">${profile.name}</a></td><td><button data-prof="${profile.id}" class="btn btn-sm btn-danger prof_rem">remove</button></td></tr>`);
+    updateProfileTableEvents();
 }
 
 function generateGuid() {
@@ -187,5 +224,4 @@ function requestTimeout() {
         $("#status").html(`<span class="dot ${alert}"></span> ${status}`);
         wating = false;
     }
-
 }
