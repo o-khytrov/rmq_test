@@ -1,6 +1,6 @@
 {
   "name": "rmqtest",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Testing RMQ RPC request",
   "main": "main.js",
   "scripts": {
