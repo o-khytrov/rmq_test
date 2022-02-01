@@ -11,7 +11,7 @@
   "author": "o.khytrov",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^15.1.0",
+    "electron": "^17.0.0",
     "electron-builder": "^22.14.5"
   },
   "dependencies": {
