@@ -15,7 +15,7 @@
     "electron-builder": "^23.3.3"
   },
   "dependencies": {
-    "amqplib": "^0.10.1"
+    "amqplib": "^0.10.3"
   },
   "build": {
     "appId": "your.id",
